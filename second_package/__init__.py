@@ -1,1 +1,2 @@
-import main
+import config
+from database import dbconnect
