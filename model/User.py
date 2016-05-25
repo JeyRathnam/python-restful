@@ -16,7 +16,4 @@ class User(Base):
 	date_of_birth = Column(String)
 	phone_number = Column(Integer)
 
-	def __repr__(self):
-	       return "<User(fname='%s', lname='%s', password='%s')>" % (self.first_name, self.last_name, self.password)
-
 Base.prepare(dbconnect.engine)
