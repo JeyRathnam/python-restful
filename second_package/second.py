@@ -1,7 +1,6 @@
 from first_package import first
 from flask_restful import Resource
 from datetime import datetime,date
-import config
 from database import dbconnect
 
 class SecondPackage(Resource):

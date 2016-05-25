@@ -23,10 +23,14 @@ def db_connect():
 
 from first_package import first
 from second_package import second
+from account import account
 
 #resource URI's
 api.add_resource(first.First,'/')
 api.add_resource(second.SecondPackage, '/seperatesecond')
+
+api.add_resource(account.createAccount,'/createAccount')
+api.add_resource(account.Login, '/Login')
 
 if __name__ == '__main__':
     app.run(debug=True)
