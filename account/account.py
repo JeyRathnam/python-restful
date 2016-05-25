@@ -7,6 +7,7 @@ from flask_restful import reqparse
 from flask import jsonify
 from passlib.apps import custom_app_context as pwd_context
 import sqlalchemy.exc
+from model import User
 
 
 
@@ -26,7 +27,7 @@ class createAccount(Resource):
         formatter_string = "%d-%m-%y"
         datetime_object = datetime.strptime(args['date_of_birth'], formatter_string)
         try:
-            ed_user = dbconnect.User(first_name=args['first_name'],last_name = args['last_name'],username =args['username'], password=hashed_password,date_of_birth = datetime_object.date(), phone_number = args['phone_number'])
+            ed_user = User.User(first_name=args['first_name'],last_name = args['last_name'],username =args['username'], password=hashed_password,date_of_birth = datetime_object.date(), phone_number = args['phone_number'])
             session = dbconnect.Session()
             session.add(ed_user)
             session.commit()
