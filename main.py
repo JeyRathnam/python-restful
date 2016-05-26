@@ -1,36 +1,27 @@
 from flask import Flask
 from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
+from flask.ext.httpauth import HTTPBasicAuth
 import config
+import model
 
+auth = HTTPBasicAuth()
+
+auth = HTTPBasicAuth()
 app = Flask(__name__)
 api = Api(app)
 
-test = '123'
 
-def db_connect():
-    print('before connect')
-    engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
-    print('after connect')
-    db = engine.connect()
-    return db
-
-# app.config.from_object('config')
-# db = SQLAlchemy(app)
-# print(db)
-
-
-from first_package import first
-from second_package import second
 from account import account
 
 #resource URI's
-api.add_resource(first.First,'/')
-api.add_resource(second.SecondPackage, '/seperatesecond')
 
-api.add_resource(account.createAccount,'/createAccount')
+api.add_resource(account.createAccount, '/createAccount')
 api.add_resource(account.Login, '/Login')
+
+
+api.add_resource(account.getUsername, '/getUsername')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
