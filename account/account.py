@@ -1,4 +1,5 @@
 from flask_restful import Resource
+import os
 from flask import Flask,g
 from datetime import datetime,date
 from database import dbconnect
@@ -23,21 +24,8 @@ class createAccount(Resource):
         parser.add_argument('phone_number', required=True, help='phone number required')
         args = parser.parse_args()
 
-        hashed_password = pwd_context.encrypt(args['password'])
+        user = Models.User.query.filter_by(username = args['username']).first() is not None
 
-        formatter_string = "%d-%m-%y"
-        datetime_object = datetime.strptime(args['date_of_birth'], formatter_string)
-        try:
-            ed_user = Models.User(first_name=args['first_name'],last_name = args['last_name'],username =args['username'], password=hashed_password,date_of_birth = datetime_object.date(), phone_number = args['phone_number'])
-            session = dbconnect.Session()
-            session.add(ed_user)
-            session.commit()
-        except sqlalchemy.exc.IntegrityError as exc:
-            return {'error' : 1,
-                    'error-message' : 'User name already taken.'}
-        session.close()
-        return {'username' : args['username'],
-                'error' : '0'}
 
 class Login(Resource):
     def post(self):
