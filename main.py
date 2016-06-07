@@ -17,10 +17,10 @@ api = Api(app)
 
 db = SQLAlchemy(app)
 
-from Models import User
+from Views import Account
 
-api.add_resource(User.Login, '/Login')
-api.add_resource(User.createAccount, '/createAccount')
+api.add_resource(Account.Login, '/Login')
+api.add_resource(Account.createAccount, '/createAccount')
 
 if __name__ == '__main__':
     app.run(debug=True)

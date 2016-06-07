@@ -1,6 +1,5 @@
 from Main import db
-from flask import jsonify
-import os, base64, random,string,json
+import random,string,json
 from serializer.JsonSerializer import JsonSerializer
 from Exceptions.InputValidationException import InputValidationException
 
@@ -13,6 +12,16 @@ class SessionClass(db.Model, JsonSerializer):
     ip_address = db.Column(db.String)
     device_name = db.Column(db.String)
     is_remember_me = db.Column(db.BOOLEAN)
+
+    def __init__(self, _user_id, _creation_date, _expiration_date, _ip_address, _device_name, _is_remember_me = 0):
+        self.user_id = _user_id
+        self.session_id = self.generate_session()
+        self.creation_date = _creation_date
+        self.expiration_date = _expiration_date
+        self.ip_address = _ip_address
+        self.device_name = _device_name
+        self.is_remember_me = _is_remember_me
+
 
     __attributes__ = ['user_id' , 'session_id' ]
 
