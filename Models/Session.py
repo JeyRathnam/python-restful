@@ -2,6 +2,7 @@ from Main import db
 from flask import jsonify
 import os, base64, random,string,json
 from serializer.JsonSerializer import JsonSerializer
+from Exceptions.InputValidationException import InputValidationException
 
 class SessionClass(db.Model, JsonSerializer):
     __tablename__ = 'session'
@@ -13,7 +14,9 @@ class SessionClass(db.Model, JsonSerializer):
     device_name = db.Column(db.String)
     is_remember_me = db.Column(db.BOOLEAN)
 
-    __attributes__ = ['user_id' , 'session_id' , 'creation_date', 'expiration_date' , 'ip_address' , 'device_name' , 'is_remember_me']
+    __attributes__ = ['user_id' , 'session_id' ]
+
+    __required__ = ['user_id', 'session_id']
 
     __attribute_serializer__ = dict(user_id='user_id', session_id='session_id' ,creation_date = 'creation_date', is_remember_me = 'is_remember_me' )
 
@@ -37,7 +40,20 @@ class SessionClass(db.Model, JsonSerializer):
     )
 
     def generate_session(self):
-        return ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(30))
+        for x in range(10):
+            session =  ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(30))
+            sessionResult = SessionClass.query.filter_by(session_id = session).first()
+            if sessionResult:
+                continue
+            else:
+                return session
+
+    def validate(self):
+        for attr in self.__required__:
+            val = getattr(self, attr)
+            if not val:
+                return InputValidationException("{} : input missing", attr)
+
 
     def jsonify(self):
         dict = {'user_id' : self.user_id , 'session_id' : self.session_id, "expiration_date" : self.expiration_date}

@@ -4,7 +4,8 @@ class JsonSerializer:
     serializers = None
 
     def serialize(self):
-        """Serialize an object to a dictionary.
+        """ taken from : http://www.prschmid.com/2012/12/json-serializing-sqlalchemy-objects.html
+        Serialize an object to a dictionary.
 
         Take all of the attributes defined in self.__attributes__ and create
         a dictionary containing those values.

@@ -6,8 +6,9 @@ from passlib.apps import custom_app_context as pwd_context
 from Models import Session
 import datetime
 import sqlalchemy,builtins,json
+from serializer.JsonSerializer import JsonSerializer
 
-class User(db.Model):
+class User(db.Model, JsonSerializer):
     __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String)
@@ -35,8 +36,9 @@ class Login(Resource):
             device_name = value['device_name']
             user = User.query.filter_by(username=username).first()
             if user and user.verify_password(password):
-                session = Session.SessionClass(user_id = user.user_id, creation_date = datetime.datetime.now(),ip_address = request.remote_addr,device_name = device_name , is_remember_me = 1)
+                session = Session.SessionClass(user_id = user.user_id, creation_date = datetime.datetime.now(),ip_address = request.remote_addr,device_name = device_name , is_remember_me = 2)
                 session.session_id = session.generate_session()
+                session.__attributes__ = ['user_id', 'session_id', 'is_remember_me']
                 db.session.add(session)
                 dict = session.serialize()
                 db.session.commit()
@@ -45,6 +47,7 @@ class Login(Resource):
             db.session.rollback()
             db.session.flush()
             return {'error' : str(e)}
+
 
 
 class createAccount(Resource):
