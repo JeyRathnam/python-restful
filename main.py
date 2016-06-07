@@ -3,14 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_restful import Api
-import os
+from Config import config
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'the quick brown fox jumps over the lazy dog'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:[password]@localhost/virtugaming'
-app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = config['SECRET_KEY']
+app.config['SQLALCHEMY_DATABASE_URI'] = config['sqlAlchemy']['SQLALCHEMY_DATABASE_URI']
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = config['sqlAlchemy']['SQLALCHEMY_COMMIT_ON_TEARDOWN']
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config['sqlAlchemy']['SQLALCHEMY_TRACK_MODIFICATIONS']
 
 
 api = Api(app)
