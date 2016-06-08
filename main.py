@@ -22,5 +22,9 @@ api.add_resource(Account.createAccount, '/createAccount')
 
 api.add_resource(Test.Test,'/Test')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if config['SERVER_ENVIRONMENT'] == 'DEBUG':
+    if __name__ == '__main__':
+        app.run(debug=True)
+elif config['SERVER_ENVIRONMENT'] == 'PROD':
+    if __name__ == '__main__':
+        app.run(host = '0.0.0.0')
