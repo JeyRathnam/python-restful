@@ -1,7 +1,5 @@
-from flask import Flask, abort, request, jsonify, g, url_for
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from flask_restful import Api
 from Config import config
 
@@ -17,10 +15,12 @@ api = Api(app)
 
 db = SQLAlchemy(app)
 
-from Views import Account
+from Views import Account,Test
 
 api.add_resource(Account.Login, '/Login')
 api.add_resource(Account.createAccount, '/createAccount')
+
+api.add_resource(Test.Test,'/Test')
 
 if __name__ == '__main__':
     app.run(debug=True)

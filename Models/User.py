@@ -1,8 +1,5 @@
 from Main import db
 from passlib.apps import custom_app_context as pwd_context
-from Models import Session
-import datetime
-import sqlalchemy,builtins,json
 from serializer.JsonSerializer import JsonSerializer
 
 class User(db.Model, JsonSerializer):

@@ -1,5 +1,6 @@
 from Main import db
 import random,string,json
+from random import randint
 from serializer.JsonSerializer import JsonSerializer
 from Exceptions.InputValidationException import InputValidationException
 
@@ -50,7 +51,7 @@ class SessionClass(db.Model, JsonSerializer):
 
     def generate_session(self):
         for x in range(10):
-            session =  ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(30))
+            session =  ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(randint(30,50)))
             sessionResult = SessionClass.query.filter_by(session_id = session).first()
             if sessionResult:
                 continue

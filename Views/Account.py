@@ -25,7 +25,7 @@ class Login(Resource):
         except Exception as e:
             db.session.rollback()
             db.session.flush()
-            return {'error' : str(e)}
+
 
 
 class createAccount(Resource):
