@@ -16,7 +16,7 @@ class Login(Resource):
                 session = Session.SessionClass(user.user_id, datetime.datetime.now(), None, request.remote_addr, device_name, _is_remember_me=0)
                 session.expiration_date = session.creation_date + datetime.timedelta(minutes=1440)
                 session.session_id = session.generate_session()
-                session.__attributes__ = [ 'session_id', 'is_remember_me']
+                session.__attributes__ = [ 'session_id']
                 db.session.add(session)
                 dict = session.serialize()
                 dict['username'] = user.username
@@ -30,17 +30,18 @@ class Login(Resource):
 
 class createAccount(Resource):
     def post(self):
-        first_name = request.json.get('firstname')
-        last_name = request.json.get('lastname')
-        last_name = request.json.get('lastname')
-        username = request.json.get('username')
-        password = request.json.get('password')
-        date_of_birth = request.json.get('dob')
-        phone_number = request.json.get('phonenumber')
+        values = request.get_json(silent=True)
+        first_name = values['firstname']
+        last_name = values['lastname']
+        last_name = values['lastname']
+        username = values['username']
+        password = values['password']
+        date_of_birth = values['dob']
+        phone_number = values['phonenumber']
         if username is None or password is None:
             return {'error' : 1, 'error-message' : 'missing input arguments'}    # missing arguments
-        if User.query.filter_by(username=username).first() is not None:
-            return {'error': 1, 'error-message' : "username taken"}    # existing user
+        if User.User.query.filter_by(username=username).first() is not None:
+            return {'error': "username taken"}    # existing user
         user = User.User(first_name,last_name,username,password,date_of_birth,phone_number)
         user.hash_password(password)
         #db.session.expire_on_commit = False

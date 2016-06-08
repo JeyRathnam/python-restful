@@ -12,8 +12,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config['sqlAlchemy']['SQLALCHEMY_
 
 
 api = Api(app)
-
 db = SQLAlchemy(app)
+
 
 from Views import Account,Test
 
