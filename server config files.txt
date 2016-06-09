@@ -1,0 +1,26 @@
+description "gunicorn app for virtugaming"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+setuid demo
+setgid www-data
+
+env PATH=/home/virtuuser/virtugaming/VGenv/bin/
+chdir /home/virtuuser/virtugaming/virtugaming-server/
+exec gunicorn --workers 3 --bind unix:virtugmaing.sock -m 007 wsgi:app
+
+
+
+server {
+    listen 80;
+    server_name 107.170.132.168;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/virtuuser/virtugaming/virtugaming-server/virtugmaing.sock;
+    }
+}
+
+sudo ln -s /etc/nginx/sites-available/virtugaming /etc/nginx/sites-enabled
