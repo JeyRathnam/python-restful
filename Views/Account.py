@@ -19,7 +19,7 @@ class Login(Resource):
                 session.__attributes__ = [ 'session_id']
                 db.session.add(session)
                 dict = session.serialize()
-                dict['username'] = user.username
+                #dict['username'] = user.username
                 db.session.commit()
                 return dict, 200
         except Exception as e:
