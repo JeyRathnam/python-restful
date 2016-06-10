@@ -13,7 +13,7 @@ class Login(Resource):
             device_name = value['device_name']
             user = User.User.query.filter_by(username=username).first()
             if user and user.verify_password(password):
-                session = Session.SessionClass(user.user_id, datetime.datetime.now(), None, request.remote_addr, device_name, _is_remember_me=0)
+                session = Session.SessionClass(user.user_id, datetime.datetime.now(), None, request.environ['REMOTE_ADDR'], device_name, _is_remember_me=0)
                 session.expiration_date = session.creation_date + datetime.timedelta(minutes=1440)
                 session.session_id = session.generate_session()
                 session.__attributes__ = [ 'session_id']
