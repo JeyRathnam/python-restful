@@ -15,11 +15,11 @@ api = Api(app)
 db = SQLAlchemy(app)
 
 
-from Views import Account,Test
+from Views import Account,Test,UserGames
 
 api.add_resource(Account.Login, '/Login')
 api.add_resource(Account.createAccount, '/createAccount')
-
+api.add_resource(UserGames.setUserGame, '/setUserGame')
 api.add_resource(Test.Test,'/Test')
 
 if config['SERVER_ENVIRONMENT'] == 'DEBUG':
