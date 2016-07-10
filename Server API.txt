@@ -1,0 +1,97 @@
+Creating an account:
+
+URL : http://107.170.132.168/createAccount
+
+Header : 
+Content-Type : application/json
+
+data :
+{
+    "firstname" : "jey",
+    "lastname" : "Rathnam",
+    "phonenumber" : 123,
+    "dob" : "30-01-12",
+    "password" : "1234",
+    "username" : "jairathnem"
+}
+
+return response:
+
+if valid: 
+{
+  "username": "jairathnem"
+}
+
+if username taken:
+{
+  "error": "username taken"
+}
+----------------------------------------------------------------
+
+Logging into an account:
+
+URL : http://107.170.132.168/Login
+
+Header : 
+Content-Type : application/json
+
+data :
+{
+"username" : "jairathnem",
+"password" : "1234",
+"device_name" : "Desktop 1"
+}
+
+return response:
+
+if valid: 
+{
+  "username": "jairathnem",
+  "session_id": "szn5bKTVPnKX4Uuq0CBNfgMoeDAOGA9xUj"
+}
+if username taken:
+null - this will be changed to send a proper error message
+
+
+----------------------------------------------------------------
+
+Add new user game:
+
+URL : http://107.170.132.168/setUserGame
+
+Header : 
+Content-Type : application/json
+Virtu-auth : “-- session returmed from login’--”
+
+data :
+{
+"game_id" : "1"
+}
+
+
+return response:
+
+if valid: 
+{
+  "error": 0
+}
+
+----------------------------------------------------------------
+
+Get user games:
+
+URL : http://107.170.132.168/getUserGame
+
+Header : 
+Content-Type : application/json
+Virtu-auth : “-- session returmed from login’--”
+
+return response:
+
+{
+  "games": [
+    "xonotic"
+  ]
+}
+
+
