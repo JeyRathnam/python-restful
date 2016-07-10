@@ -22,4 +22,4 @@ class setUserGame(Resource):
             db.session.commit()
             return {'error' : 0}
         except Exception as e:
-            return  {'error' : 1}
+            return  {'error' : e}
