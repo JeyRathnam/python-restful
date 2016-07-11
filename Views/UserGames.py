@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import request
 from Models import Games,UserGames
 from Main import db
-import Decorators,datetime,json
+import Decorators,datetime
 
 class getUserGames(Resource):
     @Decorators.login_required
@@ -12,8 +12,14 @@ class getUserGames(Resource):
             usergames =  UserGames.UserGames.query.filter_by(user_id = _user_id).all()
             gameList = []
             for usergame in usergames:
-                gameDesc = Games.Games.query.filter_by(game_id = usergame.game_id).first()
-                gameList.append(gameDesc.game_title)
+                game = Games.Games.query.filter_by(game_id = usergame.game_id).first()
+                usergame.__attributes__ = ['last_played', 'game_kills' , 'game_deaths' , 'game_wins' , 'game_seconds']
+                game.__attributes__ = ['game_title' , 'game_desc']
+                usergameSerialize = usergame.serialize()
+                gameserialize = game.serialize()
+                usergameSerialize['game_title'] = gameserialize['game_title']
+                usergameSerialize['game_desc'] = gameserialize['game_desc']
+                gameList.append(usergameSerialize)
             return {'games': gameList}
         except Exception as e:
             return e

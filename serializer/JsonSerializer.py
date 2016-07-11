@@ -59,3 +59,11 @@ class JsonSerializer:
                 d[attr] = val
 
         return self.__object_class__(**d)
+
+    def join(self,json):
+        for attr in json.__attributes__:
+            ser = json.serialize()
+            val = ser[attr]
+            self[attr] = val
+
+
