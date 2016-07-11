@@ -6,7 +6,6 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         virtuAuth = request.headers.get('virtu-auth')
-        args = ["hello"]
         if virtuAuth is not None:
             session = Session.SessionClass.query.filter_by(session_id = virtuAuth).first()
             if session is not None:

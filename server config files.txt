@@ -24,3 +24,5 @@ server {
 }
 
 sudo ln -s /etc/nginx/sites-available/virtugaming /etc/nginx/sites-enabled
+
+sudo restart virtugaming
