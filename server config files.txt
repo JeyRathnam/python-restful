@@ -26,3 +26,8 @@ server {
 sudo ln -s /etc/nginx/sites-available/virtugaming /etc/nginx/sites-enabled
 
 sudo restart virtugaming
+
+
+
+to add changes to DB database:
+cat *.sql | mysql -u root -p virtugaming
