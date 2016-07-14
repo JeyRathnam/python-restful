@@ -95,3 +95,27 @@ return response:
 }
 
 
+----------------------------------------------------------------
+
+Create game session:
+URL : http://107.170.132.168/createGameSession
+
+Header :
+Content-Type : application/json
+Virtu-auth : “-- session returned from login--”
+
+
+data :
+
+{
+"game_id" : "1"
+}
+
+return response:
+{
+  "session start": "2016-07-13 20:35:26.44605220:35:26.446052",
+  "users": [
+    "jairathnem",
+    "jairathnem12"
+  ]
+}
